@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Platform,StyleSheet, Text, View } from 'react-native';
 
 const styles = StyleSheet.create({
     headText: {
@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
         paddingTop: 50,
         paddingBottom: 20,
         paddingRight: 10,
-        backgroundColor: "#35605a",
+        backgroundColor: Platform.OS === "android"?"#31e981":"#35605a",
         flex:1
     }
 })
@@ -29,7 +29,7 @@ class Header extends Component {
     
     state = {  }
     render() { 
-        let display = this.state.isLoggedIn? "Sample User" : this.props.message;
+        let display = this.state.isLoggedIn? `Sample user from ${Platform.OS} on version: ${Platform.Version} and is TV : ${Platform.isTV}` : this.props.message;
         return (  
             <View style = {styles.headStyle}>
             <Text  style = {styles.headText}onPress = {this.toggleUser}>{display}</Text>
