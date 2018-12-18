@@ -22,7 +22,7 @@ class Contact extends Component {
   clearFields = () => this.setState({ message: "", name: "", email: "" });
 
   sendMessage = () => {
-    Alert.alert(`Message ${this.state.message}`);
+    Alert.alert(this.state.name, this.state.message);
     this.props.navigation.goBack();
   };
 
