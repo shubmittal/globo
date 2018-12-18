@@ -1,10 +1,16 @@
-import React, {Component} from 'react';
-import Home from "./app/views/Home"
+import React from "react";
+import { createStackNavigator, createAppContainer } from "react-navigation";
+import Home from "./app/views/Home";
+import Contact from "./app/views/Contact";
 
-export default class App extends Component {
-  render() {
-    return (
-     <Home/>
-    );
-  }
-}
+const AppNavigation = createStackNavigator(
+  {
+    HomeRT: { screen: Home },
+    ContactRT: { screen: Contact }
+  },
+  { initialRouteName: "HomeRT" }
+);
+
+const App = createAppContainer(AppNavigation);
+
+export default App;
