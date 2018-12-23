@@ -5,6 +5,7 @@ import Contact from "./app/views/Contact";
 import Video from "./app/views/Video";
 import VideoDetail from "./app/views/VideoDetail";
 import Register from "./app/views/Register";
+import Login from "./app/views/Login";
 
 const AppNavigation = createStackNavigator(
   {
@@ -12,7 +13,8 @@ const AppNavigation = createStackNavigator(
     ContactRT: { screen: Contact },
     LessonRT: { screen: Video },
     VideoDetailRT: { screen: VideoDetail },
-    RegisterRT: { screen: Register }
+    RegisterRT: { screen: Register },
+    LoginRT: { screen: Login }
   },
   { initialRouteName: "HomeRT" }
 );

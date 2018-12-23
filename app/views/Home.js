@@ -10,7 +10,7 @@ class Home extends Component {
     let { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
-        <Header message="Press to login" />
+        <Header message="Press to login" navigate={navigate} />
         <Hero />
         <Menu navigate={navigate} />
       </View>
