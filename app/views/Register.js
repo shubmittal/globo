@@ -28,7 +28,8 @@ class Register extends Component {
     if (!this.state.confirmPassword) Alert.alert("Please confirm Password");
 
     if (this.state.password !== this.state.confirmPassword)
-      Alert.alert("Confirm password must match password");
+      Alert.alert(this.state.password, this.state.confirmPassword);
+    Alert.alert("Confirm password must match password");
 
     return (
       !!this.state.username &&
@@ -44,11 +45,11 @@ class Register extends Component {
   };
   register = async () => {
     console.log(this.validateInputs());
-    if (this.validateInputs) {
-      let isExistingUser = AsyncStorage.getItem(this.state.username);
+    if (this.validateInputs()) {
+      let isExistingUser = await AsyncStorage.getItem(this.state.username);
       console.log(isExistingUser);
       if (!!isExistingUser) {
-        Alert.alert("Used already exists.");
+        Alert.alert("User already exists.");
       } else {
         await AsyncStorage.setItem(this.state.username, this.state.password);
         Alert.alert(
@@ -117,11 +118,9 @@ const styles = StyleSheet.create({
     fontSize: 16
   },
   inputs: {
-    flex: 1,
+    flex: 2,
     width: "80%",
-    borderColor: "blue",
-    borderWidth: 1,
-    padding: 10
+    alignSelf: "center"
   },
   buttons: {
     fontSize: 16
