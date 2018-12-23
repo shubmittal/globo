@@ -70,7 +70,7 @@ class Contact extends Component {
             onPress={this.clearFields}
             underlayColor="#31e981"
           >
-            <Text>Reset Form</Text>
+            <Text style={styles.buttontext}>Reset Form</Text>
           </TouchableHighlight>
         </View>
       </View>
@@ -85,5 +85,6 @@ const styles = StyleSheet.create({
   heading: { fontSize: 16, flex: 1 },
   inputs: { flex: 1, width: "80%", padding: 10 },
   mutilineinputs: { flex: 2, width: "90%", paddingTop: 20 },
-  button: { marginTop: 15, fontSize: 16, borderColor: "cyan" }
+  button: { marginTop: 15, borderColor: "cyan", borderColor: "green" },
+  buttontext: { fontSize: 16 }
 });
