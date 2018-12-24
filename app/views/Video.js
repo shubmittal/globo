@@ -25,7 +25,7 @@ class Video extends Component {
       console.error(error);
     }
   }
-  _keyExtractor = item => item.id.videoId || item.channelId;
+  _keyExtractor = item => item.id.videoId || item.id.channelId;
   _renderItem = ({ item }) => (
     <TubeItem
       id={item.id.videoId || item.id.channelId}
