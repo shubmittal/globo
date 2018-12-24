@@ -9,6 +9,8 @@ import {
   TouchableHighlight,
   Alert
 } from "react-native";
+
+import { logout } from "../services/loginService";
 const styles = StyleSheet.create({
   headText: {
     textAlign: "right",
@@ -34,48 +36,34 @@ const styles = StyleSheet.create({
 });
 
 class Header extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      isLoggedIn: false
-    };
-  }
-  async componentDidMount() {
-    let isLoggedIn = await AsyncStorage.getItem("isLoggedIn");
-    if (isLoggedIn === "true") {
-      let username = await AsyncStorage.getItem("whoIsLoggedIn");
-
-      this.setState({ isLoggedIn: true, username });
-    }
-  }
-
-  toggleUser = () =>
-    this.setState(previousState => ({ isLoggedIn: !previousState.isLoggedIn }));
-  logout = async () => {
-    await AsyncStorage.removeItem("whoIsLoggedIn");
-    await AsyncStorage.removeItem("isLoggedIn");
+  handlelogout = async () => {
+    await logout();
     Alert.alert("You have been logged out");
-    this.setState({ isLoggedIn: false, username: "" });
+    this.props.handleLoginLogout(false, "");
   };
-  state = {};
   render() {
+    let { userName, isLoggedIn, handleLoginLogout } = this.props;
+
     return (
       <View style={styles.headStyle}>
         <Image
           style={styles.logoStyle}
           source={require("./img/SampleLogo.png")}
         />
-        {this.state.isLoggedIn && (
-          <Text style={styles.headText}>{this.state.username}</Text>
-        )}
-        {!this.state.isLoggedIn && (
-          <TouchableHighlight onPress={() => this.props.navigate("LoginRT")}>
+        {isLoggedIn && <Text style={styles.headText}>{userName}</Text>}
+        {!isLoggedIn && (
+          <TouchableHighlight
+            onPress={() =>
+              this.props.navigate("LoginRT", {
+                onLogin: handleLoginLogout
+              })
+            }
+          >
             <Text>Login</Text>
           </TouchableHighlight>
         )}
-        {this.state.isLoggedIn && (
-          <TouchableHighlight onPress={this.logout}>
+        {isLoggedIn && (
+          <TouchableHighlight onPress={() => this.handlelogout()}>
             <Text>Logout</Text>
           </TouchableHighlight>
         )}

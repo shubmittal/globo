@@ -8,6 +8,7 @@ import {
   StyleSheet,
   TouchableHighlight
 } from "react-native";
+import { register, isLoggedIn } from "../services/loginService";
 
 class Register extends Component {
   static navigationOptions = {
@@ -23,20 +24,28 @@ class Register extends Component {
   }
 
   validateInputs = () => {
-    if (!this.state.username) Alert.alert("Please enter a username");
-    if (!this.state.password) Alert.alert("Please enter a password");
-    if (!this.state.confirmPassword) Alert.alert("Please confirm Password");
+    let isValid = true;
+    if (!this.state.username) {
+      Alert.alert("Please enter a username");
+      isValid = false;
+    }
 
-    if (this.state.password !== this.state.confirmPassword)
+    if (!this.state.password) {
+      Alert.alert("Please enter a password");
+      isValid = false;
+    }
+    if (!this.state.confirmPassword) {
+      Alert.alert("Please confirm Password");
+      isValid = false;
+    }
+
+    if (this.state.password !== this.state.confirmPassword) {
       Alert.alert(this.state.password, this.state.confirmPassword);
-    Alert.alert("Confirm password must match password");
+      Alert.alert("Confirm password must match password");
+      isValid = false;
+    }
 
-    return (
-      !!this.state.username &&
-      !!this.state.password &&
-      !!this.state.confirmPassword &&
-      this.state.password === this.state.confirmPassword
-    );
+    return isValid;
   };
 
   cancelRegister = () => {
@@ -44,19 +53,22 @@ class Register extends Component {
     this.props.navigation.navigate("HomeRT");
   };
   register = async () => {
-    console.log(this.validateInputs());
-    if (this.validateInputs()) {
-      let isExistingUser = await AsyncStorage.getItem(this.state.username);
-      console.log(isExistingUser);
-      if (!!isExistingUser) {
-        Alert.alert("User already exists.");
-      } else {
-        await AsyncStorage.setItem(this.state.username, this.state.password);
-        Alert.alert(
-          `Account with username ${this.state.username} create sucessfully`
-        );
-        this.props.navigation.navigate("HomeRT");
-      }
+    if (!this.validateInputs()) return;
+    let { username, password } = this.state;
+
+    let isUserLoggedIn = await isLoggedIn();
+    if (isUserLoggedIn) {
+      Alert.alert(
+        "You are already logged in. Please logout and then try to login"
+      );
+    } else {
+      let result = register(username, password);
+      Alert.alert(
+        `Account with username ${
+          this.state.username
+        } create sucessfully. You can now login into the account.`
+      );
+      this.props.navigation.navigate("HomeRT");
     }
   };
 

@@ -9,7 +9,6 @@ class VideoDetail extends Component {
   render() {
     let videoId = this.props.navigation.getParam("videoId", "No Video");
     let url = `https://www.youtube.com/embed/${videoId}`;
-    console.log(url);
     return (
       <WebView
         javaScriptEnabled={true}

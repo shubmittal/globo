@@ -8,6 +8,7 @@ import {
   Alert,
   StyleSheet
 } from "react-native";
+import { login, isLoggedIn } from "../services/loginService";
 
 class Login extends Component {
   constructor(props) {
@@ -18,24 +19,30 @@ class Login extends Component {
     };
   }
   login = async () => {
+    let onLogin = this.props.navigation.getParam("onLogin");
     let { username, password } = this.state;
 
     if (!username || !password) {
       return Alert.alert("Please enter username and password");
     }
+    let isAlreadyLoggedin = await isLoggedIn();
 
-    let expected = await AsyncStorage.getItem(username);
-    if (expected === this.state.password) {
-      Alert.alert("Successfully logged in");
-      await AsyncStorage.setItem("isLoggedIn", "true");
-      await AsyncStorage.setItem("whoIsLoggedIn", username);
+    if (isAlreadyLoggedin) {
+      Alert.alert("You are already logged in");
+      return this.props.navigation.navigate("HomeRT");
+    }
+
+    let result = await login(username, password);
+    if (result === "Invalid username/password") Alert.alert(result);
+    else {
+      Alert.alert("You have now successfully logged in");
+
+      onLogin(true, username);
       this.props.navigation.navigate("HomeRT");
-    } else {
-      Alert.alert("Invalid username and or password");
     }
   };
   cancelLogin = () => {
-    alert.alert("Login cancelled");
+    Alert.alert("Login cancelled");
     this.props.navigation.navigate("HomeRT");
   };
 
