@@ -19,9 +19,9 @@ class Quiz extends Component {
       completedQuiz: false
     };
   }
-  async componentDidMount() {
+  componentDidMount() {
     let numQuestions = QuizData.questions.length;
-    await this.setState({
+    this.setState({
       questionsList: Array.from(QuizData.questions),
       questionsLoaded: true,
       numQuestions,
@@ -38,7 +38,7 @@ class Quiz extends Component {
       completedQuiz
     } = this.state;
     totalScore -= penalty;
-    inocrrect = penalty > 0 ? incorrect + 1 : incorrect;
+    incorrect = penalty > 0 ? incorrect + 1 : incorrect;
     questionsAnswered += 1;
     completedQuiz = questionsAnswered === numQuestions;
     this.setState({
@@ -76,7 +76,7 @@ class Quiz extends Component {
   render() {
     let { questionsList, completedQuiz, questionsLoaded } = this.state;
     return (
-      <View>
+      <View style={styles.container}>
         {questionsLoaded && (
           <FlatList
             data={questionsList}
@@ -85,7 +85,10 @@ class Quiz extends Component {
           />
         )}
         {completedQuiz && (
-          <TouchableHighlight onPress={this.finishQuiz}>
+          <TouchableHighlight
+            onPress={this.finishQuiz}
+            style={[styles.buttons, styles.enabled]}
+          >
             <Text>Done</Text>
           </TouchableHighlight>
         )}
@@ -97,6 +100,21 @@ class Quiz extends Component {
 export default Quiz;
 
 const styles = StyleSheet.create({
-  conatiner: {},
-  button: {}
+  container: {
+    paddingTop: 20,
+    flex: 1
+  },
+  disabled: {
+    backgroundColor: "grey"
+  },
+  enabled: {
+    backgroundColor: "green"
+  },
+  buttons: {
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "yellow",
+    height: "5%",
+    margin: 10
+  }
 });
