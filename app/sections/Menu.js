@@ -47,7 +47,10 @@ class Menu extends Component {
           >
             <Text style={styles.buttonText}>Quiz</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.buttonStyles} onPress={this.onPress}>
+          <TouchableOpacity
+            style={styles.buttonStyles}
+            onPress={() => navigate("AboutRT")}
+          >
             <Text style={styles.buttonText}>About</Text>
           </TouchableOpacity>
         </View>
