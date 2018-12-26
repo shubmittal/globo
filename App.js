@@ -8,6 +8,7 @@ import Register from "./app/views/Register";
 import Login from "./app/views/Login";
 import Quiz from "./app/views/Quiz";
 import FinishQuiz from "./app/views/FinishQuiz";
+import Blogs from "./app/views/Blogs";
 
 const AppNavigation = createStackNavigator(
   {
@@ -18,7 +19,8 @@ const AppNavigation = createStackNavigator(
     RegisterRT: { screen: Register },
     LoginRT: { screen: Login },
     QuizRT: { screen: Quiz },
-    FinishRT: { screen: FinishQuiz }
+    FinishRT: { screen: FinishQuiz },
+    BlogsRT: { screen: Blogs }
   },
   { initialRouteName: "HomeRT" }
 );

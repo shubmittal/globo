@@ -26,7 +26,10 @@ class Menu extends Component {
         </View>
 
         <View style={styles.buttonRow}>
-          <TouchableOpacity style={styles.buttonStyles} onPress={this.onPress}>
+          <TouchableOpacity
+            style={styles.buttonStyles}
+            onPress={() => navigate("BlogsRT")}
+          >
             <Text style={styles.buttonText}>Blog</Text>
           </TouchableOpacity>
           <TouchableOpacity
